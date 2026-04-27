@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nutra — UX Research Case Study · Camila González</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #4CAF78;
+    --green-dark: #388E5A;
+    --green-light: #ADD899;
+    --green-bg: #F0F4F0;
+    --pink: #DA7297;
+    --amber: #F59E0B;
+    --purple: #8B5CF6;
+    --dark: #1A2E1A;
+    --mid: #6B7280;
+    --light: #E5E7EB;
+    --white: #FFFFFF;
+    --card: #FFFFFF;
+  }
+
+  body {
+    background: #111;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    overflow: hidden;
+  }
+
+  deck-stage { --slide-bg: #F0F4F0; }
+
+  /* ── Shared slide base ── */
+  section {
+    width: 1920px;
+    height: 1080px;
+    position: relative;
+    overflow: hidden;
+    background: var(--green-bg);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--dark);
+  }
+
+  /* ─── TYPOGRAPHY ─── */
+  .label {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+  .label-light { color: rgba(255,255,255,0.65); }
+
+  .h1 { font-size: 88px; font-weight: 800; line-height: 1; letter-spacing: -2px; }
+  .h2 { font-size: 64px; font-weight: 800; line-height: 1.05; letter-spacing: -1.5px; }
+  .h3 { font-size: 44px; font-weight: 700; line-height: 1.15; letter-spacing: -0.5px; }
+  .h4 { font-size: 32px; font-weight: 700; line-height: 1.2; }
+  .body { font-size: 22px; font-weight: 400; line-height: 1.6; color: var(--mid); }
+  .body-sm { font-size: 18px; font-weight: 400; line-height: 1.6; color: var(--mid); }
+
+  /* ─── LAYOUT HELPERS ─── */
+  .flex { display: flex; }
+  .col { flex-direction: column; }
+  .center { align-items: center; justify-content: center; }
+  .gap8 { gap: 8px; }
+  .gap12 { gap: 12px; }
+  .gap16 { gap: 16px; }
+  .gap24 { gap: 24px; }
+  .gap32 { gap: 32px; }
+  .gap48 { gap: 48px; }
+
+  /* ─── DECORATIVE ELEMENTS ─── */
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.18;
+    pointer-events: none;
+  }
+  .blob-green { background: var(--green); }
+  .blob-pink { background: var(--pink); }
+  .blob-amber { background: var(--amber); }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .pill-green { background: #DCFCE7; color: #16A34A; }
+  .pill-pink { background: #FCE7EF; color: #BE185D; }
+  .pill-amber { background: #FEF9C3; color: #92400E; }
+  .pill-purple { background: #EDE9FE; color: #6D28D9; }
+  .pill-dark { background: var(--dark); color: #fff; }
+
+  .card {
+    background: #fff;
+    border-radius: 24px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  }
+
+  .tag-line {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--green); color: #fff;
+    padding: 10px 22px; border-radius: 999px;
+    font-size: 15px; font-weight: 700;
+  }
+
+  /* ─── SLIDE-SPECIFIC: slide numbers ─── */
+  .slide-num {
+    position: absolute;
+    bottom: 40px; right: 56px;
+    font-size: 13px; font-weight: 600;
+    color: rgba(0,0,0,0.2);
+    letter-spacing: 1px;
+  }
+
+  /* ─── NUTRA LOGO ─── */
+  .nutra-logo {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .nutra-logo .icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: var(--green);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 4px 16px rgba(76,175,120,0.4);
+  }
+  .nutra-logo .wordmark {
+    font-size: 26px; font-weight: 900; letter-spacing: 3px; color: var(--dark);
+  }
+
+  /* Progress dots for mock phone */
+  .dot-row { display: flex; gap: 8px; align-items: center; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot-fill { background: var(--green); }
+  .dot-empty { background: var(--light); }
+</style>
+
+<script src="deck-stage.js"></script>
+</head>
+<body>
+<deck-stage>
+
+  <!-- ═══════════════════════════════════════
+       01 · COVER
+  ══════════════════════════════════════════ -->
+  <section data-screen-label="01 Cover">
+    <!-- blobs -->
+    <div class="blob blob-green" style="width:700px;height:700px;top:-200px;right:-100px;"></div>
+    <div class="blob blob-pink" style="width:500px;height:500px;bottom:-150px;left:300px;"></div>
+
+    <!-- left accent bar -->
+    <div style="position:absolute;left:0;top:0;bottom:0;width:8px;background:var(--green);"></div>
+
+    <!-- top bar -->
+    <div style="position:absolute;top:48px;left:72px;right:72px;display:flex;align-items:center;justify-content:space-between;">
+      <div class="nutra-logo">
+        <div class="icon">🥗</div>
+        <div class="wordmark">NUTRA</div>
+      </div>
+      <div class="pill pill-green">UX Research Case Study</div>
+    </div>
+
+    <!-- main content -->
+    <div style="position:absolute;top:50%;left:72px;transform:translateY(-50%);max-width:900px;">
+      <div class="label" style="margin-bottom:28px;">Portfolio · 2025</div>
+      <div class="h1" style="margin-bottom:32px;line-height:1.0;">
+        Nutra:<br/>
+        <span style="color:var(--green);">UX Research</span><br/>
+        &amp; Discovery
+      </div>
+      <div class="body" style="max-width:620px;margin-bottom:48px;">
+        Investigué por qué los pacientes no sostenían el registro de su alimentación y qué hacía falta para que sí lo hicieran.
+      </div>
+
+      <div style="display:flex;align-items:center;gap:20px;">
+        <div style="width:48px;height:48px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;">
+          <span style="font-size:20px;font-weight:900;color:#fff;">CG</span>
+        </div>
+        <div>
+          <div style="font-size:18px;font-weight:700;color:var(--dark);">Camila González</div>
+          <div style="font-size:15px;color:var(--mid);">UX Researcher</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- right: app mockup -->
+    <div style="position:absolute;right:100px;top:50%;transform:translateY(-50%);">
+      <!-- Phone frame -->
+      <div style="width:300px;height:620px;background:#0e1e0e;border-radius:52px;padding:14px;box-shadow:0 48px 120px rgba(0,0,0,0.45),0 0 0 1px rgba(255,255,255,0.06);position:relative;">
+        <!-- Dynamic island -->
+        <div style="position:absolute;top:26px;left:50%;transform:translateX(-50%);width:90px;height:26px;background:#0e1e0e;border-radius:20px;z-index:10;"></div>
+        <div style="width:100%;height:100%;background:var(--green-bg);border-radius:40px;overflow:hidden;display:flex;flex-direction:column;">
+
+          <!-- status bar -->
+          <div style="height:48px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 20px 6px;flex-shrink:0;">
+            <span style="font-size:11px;font-weight:700;color:var(--dark);">9:41</span>
+            <div style="display:flex;gap:5px;align-items:center;">
+              <svg width="14" height="10" viewBox="0 0 14 10"><rect x="0" y="3" width="3" height="7" rx="1" fill="#1A2E1A" opacity="0.3"/><rect x="4" y="2" width="3" height="8" rx="1" fill="#1A2E1A" opacity="0.5"/><rect x="8" y="0" width="3" height="10" rx="1" fill="#1A2E1A" opacity="0.8"/><rect x="12" y="0" width="2" height="10" rx="1" fill="#1A2E1A"/></svg>
+              <svg width="14" height="10" viewBox="0 0 14 10"><path d="M7 2C9.5 2 11.7 3.1 13.2 4.8L14 4C12.3 2 10 1 7 1C4 1 1.7 2 0 4L0.8 4.8C2.3 3.1 4.5 2 7 2Z" fill="#1A2E1A"/><path d="M7 4.5C8.7 4.5 10.2 5.2 11.3 6.3L12.1 5.5C10.8 4.2 9 3.5 7 3.5C5 3.5 3.2 4.2 1.9 5.5L2.7 6.3C3.8 5.2 5.3 4.5 7 4.5Z" fill="#1A2E1A"/><circle cx="7" cy="8.5" r="1.5" fill="#1A2E1A"/></svg>
+              <svg width="22" height="10" viewBox="0 0 22 10"><rect x="0" y="1" width="19" height="8" rx="2" stroke="#1A2E1A" stroke-width="1" fill="none" opacity="0.4"/><rect x="20" y="3" width="2" height="4" rx="1" fill="#1A2E1A" opacity="0.4"/><rect x="1" y="2" width="14" height="6" rx="1.5" fill="#4CAF78"/></svg>
+            </div>
+          </div>
+
+          <!-- scrollable content -->
+          <div style="flex:1;overflow:hidden;display:flex;flex-direction:column;gap:8px;padding:0 10px 10px;">
+
+            <!-- Day Header -->
+            <div style="background:#fff;border-radius:18px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+              <div>
+                <div style="font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:1px;margin-bottom:2px;">Hoy</div>
+                <div style="font-size:15px;font-weight:800;color:var(--dark);">Camila 👋</div>
+                <div style="font-size:10px;color:var(--mid);margin-top:2px;">Lunes 27 de abril</div>
+              </div>
+              <!-- circular progress -->
+              <div style="position:relative;width:52px;height:52px;">
+                <svg width="52" height="52" viewBox="0 0 52 52">
+                  <circle cx="26" cy="26" r="21" fill="none" stroke="#E5E7EB" stroke-width="5"/>
+                  <circle cx="26" cy="26" r="21" fill="none" stroke="#4CAF78" stroke-width="5" stroke-dasharray="98 33" stroke-linecap="round" transform="rotate(-90 26 26)"/>
+                </svg>
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:var(--green);">75%</div>
+              </div>
+            </div>
+
+            <!-- label -->
+            <div style="font-size:9px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:1.5px;padding-left:4px;">Mis comidas</div>
+
+            <!-- Meal: Desayuno — completo -->
+            <div style="background:#fff;border-radius:14px;padding:11px 13px;border-left:3.5px solid var(--green);box-shadow:0 1px 6px rgba(0,0,0,0.05);">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;">
+                <div style="display:flex;align-items:center;gap:6px;">
+                  <span style="font-size:14px;">☀️</span>
+                  <span style="font-size:12px;font-weight:700;color:var(--dark);">Desayuno</span>
+                </div>
+                <div style="background:#DCFCE7;border-radius:10px;padding:2px 8px;font-size:9px;font-weight:700;color:#16A34A;">✓ Completo</div>
+              </div>
+              <!-- progress bar -->
+              <div style="height:4px;background:#E5E7EB;border-radius:2px;margin-bottom:7px;"><div style="height:100%;width:100%;background:var(--green);border-radius:2px;"></div></div>
+              <!-- nutrient dots -->
+              <div style="display:flex;flex-direction:column;gap:4px;">
+                <div style="display:flex;align-items:center;gap:5px;"><span style="font-size:10px;">🥩</span><div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:50%;background:#8B5CF6;"></div><div style="width:8px;height:8px;border-radius:50%;background:#8B5CF6;"></div></div></div>
+                <div style="display:flex;align-items:center;gap:5px;"><span style="font-size:10px;">🍞</span><div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:50%;background:#F59E0B;"></div><div style="width:8px;height:8px;border-radius:50%;background:#F59E0B;"></div><div style="width:8px;height:8px;border-radius:50%;background:#F59E0B;"></div></div></div>
+                <div style="display:flex;align-items:center;gap:5px;"><span style="font-size:10px;">🍎</span><div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:50%;background:#EC4899;"></div></div></div>
+              </div>
+            </div>
+
+            <!-- Meal: Almuerzo — parcial -->
+            <div style="background:#fff;border-radius:14px;padding:11px 13px;border-left:3.5px solid var(--amber);box-shadow:0 1px 6px rgba(0,0,0,0.05);">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;">
+                <div style="display:flex;align-items:center;gap:6px;">
+                  <span style="font-size:14px;">🌤</span>
+                  <span style="font-size:12px;font-weight:700;color:var(--dark);">Almuerzo</span>
+                </div>
+                <span style="font-size:10px;font-weight:600;color:var(--amber);">3 de 7</span>
+              </div>
+              <div style="height:4px;background:#E5E7EB;border-radius:2px;margin-bottom:7px;"><div style="height:100%;width:43%;background:var(--amber);border-radius:2px;"></div></div>
+              <div style="display:flex;flex-direction:column;gap:4px;">
+                <div style="display:flex;align-items:center;gap:5px;"><span style="font-size:10px;">🥩</span><div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:50%;background:#8B5CF6;"></div><div style="width:8px;height:8px;border-radius:50%;background:#8B5CF6;"></div><div style="width:8px;height:8px;border-radius:50%;background:#E5E7EB;"></div></div></div>
+                <div style="display:flex;align-items:center;gap:5px;"><span style="font-size:10px;">🥦</span><div style="display:flex;gap:3px;"><div style="width:8px;height:8px;border-radius:50%;background:#E5E7EB;"></div><div style="width:8px;height:8px;border-radius:50%;background:#E5E7EB;"></div></div></div>
+              </div>
+            </div>
+
+            <!-- Meal: Cena — sin empezar -->
+            <div style="background:#fff;border-radius:14px;padding:11px 13px;border-left:3.5px solid #E5E7EB;box-shadow:0 1px 6px rgba(0,0,0,0.05);">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div style="display:flex;align-items:center;gap:6px;">
+                  <span style="font-size:14px;">🌙</span>
+                  <span style="font-size:12px;font-weight:700;color:var(--mid);">Cena</span>
+                </div>
+                <span style="font-size:10px;color:var(--mid);">0 de 6</span>
+              </div>
+              <div style="font-size:10px;color:var(--mid);font-style:italic;margin-top:6px;">Tocá para marcar lo que comiste →</div>
+            </div>
+
+            <!-- Streak card -->
+            <div style="background:#ADD899;border-radius:14px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;">
+              <div>
+                <div style="font-size:9px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px;">Tu racha</div>
+                <div style="font-size:9px;color:rgba(255,255,255,0.75);margin-bottom:4px;">Días seguidos registrando</div>
+                <div style="display:flex;align-items:flex-end;gap:4px;">
+                  <span style="font-size:32px;font-weight:900;color:#DA7297;line-height:1;">12</span>
+                  <span style="font-size:11px;color:#DA7297;margin-bottom:4px;">días</span>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+                <span style="font-size:28px;">🔥</span>
+                <div style="display:flex;gap:3px;">
+                  <div style="width:16px;height:16px;border-radius:4px;background:var(--green);display:flex;align-items:center;justify-content:center;"><span style="font-size:8px;color:#fff;">✓</span></div>
+                  <div style="width:16px;height:16px;border-radius:4px;background:var(--green);display:flex;align-items:center;justify-content:center;"><span style="font-size:8px;color:#fff;">✓</span></div>
+                  <div style="width:16px;height:16px;border-radius:4px;background:var(--green);display:flex;align-items:center;justify-content:center;"><span style="font-size:8px;color:#fff;">✓</span></div>
+                  <div style="width:16px;height:16px;border-radius:4px;background:var(--green);display:flex;align-items:center;justify-content:center;"><span style="font-size:8px;color:#fff;">✓</span></div>
+                  <div style="width:16px;height:16px;border-radius:4px;background:rgba(0,0,0,0.1);display:flex;align-items:center;justify-content:center;"><span style="font-size:8px;color:#fff;">·</span></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom tab bar -->
+          <div style="height:56px;background:#fff;display:flex;align-items:center;justify-content:space-around;padding:0 16px;border-top:1px solid #F0F4F0;flex-shrink:0;">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 12L12 3L21 12V21H15V15H9V21H3V12Z" stroke="#4CAF78" stroke-width="2" stroke-linejoin="round" fill="rgba(76,175,120,0.1)"/></svg>
+              <span style="font-size:8px;font-weight:700;color:var(--green);">Inicio</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="17" rx="2" stroke="#9CA3AF" stroke-width="2"/><path d="M3 9H21" stroke="#9CA3AF" stroke-width="2"/><path d="M8 2V6M16 2V6" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"/></svg>
+              <span style="font-size:8px;font-weight:600;color:var(--mid);">Historial</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 6H20M4 12H20M4 18H14" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"/></svg>
+              <span style="font-size:8px;font-weight:600;color:var(--mid);">Guía</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#9CA3AF" stroke-width="2"/><path d="M4 20C4 17 7.6 14 12 14C16.4 14 20 17 20 20" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"/></svg>
+              <span style="font-size:8px;font-weight:600;color:var(--mid);">Perfil</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- bottom metadata -->
+    <div style="position:absolute;bottom:40px;left:72px;display:flex;gap:32px;">
+      <div>
+        <div class="label" style="margin-bottom:4px;">Rol</div>
+        <div style="font-size:16px;font-weight:600;color:var(--dark);">UX Researcher</div>
+      </div>
+      <div style="width:1px;background:var(--light);"></div>
+      <div>
+        <div class="label" style="margin-bottom:4px;">Duración</div>
+        <div style="font-size:16px;font-weight:600;color:var(--dark);">8 semanas</div>
+      </div>
+      <div style="width:1px;background:var(--light);"></div>
+      <div>
+        <div class="label" style="margin-bottom:4px;">Métodos</div>
+        <div style="font-size:16px;font-weight:600;color:var(--dark);">Entrevistas · Benchmark · Encuesta</div>
+      </div>
+      <div style="width:1px;background:var(--light);"></div>
+      <div>
+        <div class="label" style="margin-bottom:4px;">Plataforma</div>
+        <div style="font-size:16px;font-weight:600;color:var(--dark);">iOS · Android</div>
+      </div>
+    </div>
+    <div class="slide-num">01 / 09</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       02 · OVERVIEW DEL PROYECTO
+  ══════════════════════════════════════════ -->
+  <section data-screen-label="02 Overview">
+    <div class="blob blob-green" style="width:600px;height:600px;top:-200px;left:-100px;"></div>
+
+    <div style="position:absolute;top:48px;left:72px;right:72px;display:flex;align-items:center;justify-content:space-between;">
+      <div class="nutra-logo">
+        <div class="icon">🥗</div>
+        <div class="wordmark">NUTRA</div>
+      </div>
+      <div class="label">Overview del Proyecto</div>
+    </div>
+
+    <div style="position:absolute;top:140px;left:72px;right:72px;bottom:80px;display:grid;grid-template-columns:1fr 1fr;gap:48px;">
+
+      <!-- left: narrative -->
+      <div style="display:flex;flex-direction:column;justify-content:center;gap:32px;">
+        <div>
+          <div class="label" style="margin-bottom:16px;">El contexto</div>
+          <div class="h3" style="margin-bottom:20px;">Un puente entre <span style="color:var(--green);">paciente</span> y nutricionista</div>
+          <div class="body" style="max-width:680px;">
+            <span style="text-align:justify;display:block;text-wrap:pretty;">Los pacientes mantenían el registro durante las primeras semanas tras la consulta. Sin embargo, a partir del segundo mes, la adherencia decaía de forma sistemática. Comprender ese quiebre y encontrar cómo evitarlo fue el foco central de este proyecto.</span>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div style="display:flex;align-items:flex-start;gap:16px;">
+            <div style="width:44px;height:44px;border-radius:12px;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;">🎯</div>
+            <div>
+              <div style="font-size:18px;font-weight:700;color:var(--dark);margin-bottom:4px;">Objetivo del research</div>
+              <div class="body-sm">Entender qué pasaba entre la consulta con la nutricionista y la siguiente semana: por qué el registro nunca duraba y qué necesitaban para que sí funcionara.</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:16px;">
+            <div style="width:44px;height:44px;border-radius:12px;background:var(--pink);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;">👩</div>
+            <div>
+              <div style="font-size:18px;font-weight:700;color:var(--dark);margin-bottom:4px;">Mi rol</div>
+              <div class="body-sm">Diseñé el plan de research, hice las entrevistas, armé el benchmark y trabajé con el equipo para llevar lo que encontré a decisiones concretas de producto.</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:16px;">
+            <div style="width:44px;height:44px;border-radius:12px;background:var(--amber);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;">⏱</div>
+            <div>
+              <div style="font-size:18px;font-weight:700;color:var(--dark);margin-bottom:4px;">Timeline</div>
+              <div class="body-sm">8 semanas · Discovery → Síntesis → Validación → Handoff</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- right: stats grid -->
+      <div style="display:flex;flex-direction:column;justify-content:center;gap:20px;">
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="card" style="padding:28px;display:flex;flex-direction:column;gap:8px;">
+            <div style="font-size:56px;font-weight:900;color:var(--green);line-height:1;">8</div>
+            <div style="font-size:15px;font-weight:700;color:var(--dark);">Entrevistas<br/>en profundidad</div>
+            <div class="body-sm" style="font-size:14px;">Pacientes activos de nutricionistas</div>
+          </div>
+          <div class="card" style="padding:28px;display:flex;flex-direction:column;gap:8px;">
+            <div style="font-size:56px;font-weight:900;color:var(--pink);line-height:1;">47</div>
+            <div style="font-size:15px;font-weight:700;color:var(--dark);">Respuestas<br/>encuesta cuantitativa</div>
+            <div class="body-sm" style="font-size:14px;">18–45 años, CABA y GBA</div>
+          </div>
+          <div class="card" style="padding:28px;display:flex;flex-direction:column;gap:8px;">
+            <div style="font-size:56px;font-weight:900;color:var(--amber);line-height:1;">4</div>
+            <div style="font-size:15px;font-weight:700;color:var(--dark);">Apps analizadas<br/>en benchmark</div>
+            <div class="body-sm" style="font-size:14px;">MyFitnessPal · Cronometer · Lifesum · FatSecret</div>
+          </div>
+          <div class="card" style="padding:28px;display:flex;flex-direction:column;gap:8px;">
+            <div style="font-size:56px;font-weight:900;color:var(--purple);line-height:1;">3</div>
+            <div style="font-size:15px;font-weight:700;color:var(--dark);">Rondas de<br/>validación</div>
+            <div class="body-sm" style="font-size:14px;">Prototipos testeados con usuarios reales</div>
+          </div>
+        </div>
+
+        <div style="background:var(--dark);border-radius:20px;padding:24px;display:flex;gap:16px;align-items:center;">
+          <div style="font-size:36px;">💡</div>
+          <div>
+            <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:4px;">Resultado clave</div>
+            <div style="font-size:15px;color:rgba(255,255,255,0.7);line-height:1.5;">En el piloto de 30 días con usuarios reales, la adherencia diaria llegó al <strong style="color:var(--green);">82%</strong> — algo que ninguna app genérica había logrado con este grupo.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="slide-num">02 / 09</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       03 · PROBLEMA & OPORTUNIDAD
+  ══════════════════════════════════════════ -->
+  <section data-screen-label="03 Problema" style="background:var(--dark);">
+    <div class="blob blob-green" style="width:800px;height:800px;bottom:-300px;right:-200px;opacity:0.12;"></div>
+    <div class="blob blob-pink" style="width:400px;height:400px;top:-100px;left:600px;opacity:0.15;"></div>
+
+    <div style="position:absolute;top:48px;left:72px;right:72px;display:flex;align-items:center;justify-content:space-between;">
+      <div class="nutra-logo">
+        <div class="icon">🥗</div>
+        <div class="wordmark" style="color:#fff;">NUTRA</div>
+      </div>
+      <div class="label label-light">Problema & Oportunidad</div>
+    </div>
+
+    <div style="position:absolute;top:140px;left:72px;right:72px;bottom:80px;display:grid;grid-template-columns:5fr 4fr;gap:80px;align-items:center;">
+
+      <div style="display:flex;flex-direction:column;gap:40px;">
+        <div>
+          <div style="font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--pink);margin-bottom:20px;">El problema</div>
+          <div class="h2" style="color:#fff;margin-bottom:24px;line-height:1.1;">
+            Los pacientes llevaban el registro <span style="color:var(--green);">en papel o en notas del celular</span> — y no funcionaba
+          </div>
+          <div class="body" style="color:rgba(255,255,255,0.6);max-width:640px;">
+            Los pacientes recibían su plan de la nutricionista pero no tenían ninguna herramienta para seguirlo. Se las rebuscaban con cuadernos, fotos y notas de voz. Los que probaron apps genéricas tampoco lograron sostener el hábito.
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;align-items:center;gap:16px;background:rgba(255,255,255,0.06);border-radius:16px;padding:18px 22px;">
+            <span style="font-size:28px;">📝</span>
+            <div style="font-size:16px;color:rgba(255,255,255,0.75);">El método más común era papel o notas en el celular — sin estructura ni feedback</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;background:rgba(255,255,255,0.06);border-radius:16px;padding:18px 22px;">
+            <span style="font-size:28px;">📱</span>
+            <div style="font-size:16px;color:rgba(255,255,255,0.75);">Quienes probaron MyFitnessPal tampoco lograron adherencia — el plan de la nutricionista no encajaba con el formato de la app</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;background:rgba(255,255,255,0.06);border-radius:16px;padding:18px 22px;">
+            <span style="font-size:28px;">📉</span>
+            <div style="font-size:16px;color:rgba(255,255,255,0.75);">El 68% abandonaba cualquier método de registro dentro de las primeras 2 semanas</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Opportunity card -->
+      <div style="display:flex;flex-direction:column;gap:20px;">
+        <div style="background:var(--green);border-radius:24px;padding:36px;">
+          <div style="font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-bottom:16px;">La oportunidad</div>
+          <div style="font-size:36px;font-weight:800;color:#fff;line-height:1.2;margin-bottom:20px;">Una app diseñada desde el vínculo clínico</div>
+          <div style="font-size:17px;color:rgba(255,255,255,0.85);line-height:1.6;">
+            Si el registro usa <strong>porciones del plan propio</strong> del paciente, y ese plan viene directo de la nutricionista, registrar lo que comés se convierte en algo que se hace en segundos.
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div style="background:rgba(255,255,255,0.08);border-radius:16px;padding:20px;text-align:center;">
+            <div style="font-size:40px;font-weight:900;color:var(--green);line-height:1;">68%</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-top:6px;">abandona apps genéricas en ≤ 2 semanas</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.08);border-radius:16px;padding:20px;text-align:center;">
+            <div style="font-size:40px;font-weight:900;color:var(--pink);line-height:1;">91%</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-top:6px;">preferiría una app conectada a su nutricionista</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="slide-num" style="color:rgba(255,255,255,0.25);">03 / 09</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       04 · METODOLOGÍA
+  ══════════════════════════════════════════ -->
+  <section data-screen-label="04 Metodología">
+    <div class="blob blob-green" style="width:500px;height:500px;bottom:-100px;right:-100px;"></div>
+
+    <div style="position:absolute;top:48px;left:72px;right:72px;display:flex;align-items:center;justify-content:space-between;">
+      <div class="nutra-logo">
+        <div class="icon">🥗</div>
+        <div class="wordmark">NUTRA</div>
+      </div>
+      <div class="label">Research Methodology</div>
+    </div>
+
+    <div style="position:absolute;top:140px;left:72px;right:72px;bottom:80px;display:flex;flex-direction:column;gap:48px;justify-content:center;">
+
+      <!-- Timeline -->
+      <div style="display:flex;align-items:flex-start;gap:0;position:relative;">
+
+        <!-- connector line -->
+        <div style="position:absolute;top:40px;left:40px;right:40px;height:3px;background:linear-gradient(90deg,var(--green),var(--pink),var(--amber),var(--purple));border-radius:2px;z-index:0;"></div>
+
+        <!-- phases -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;width:100%;gap:24px;z-index:1;">
+
+          <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;">
+            <div style="width:80px;height:80px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:32px;box-shadow:0 0 0 8px rgba(76,175,120,0.15);flex-shrink:0;">🎯</div>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Semana 1–2</div>
+              <div style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:8px;">Discovery</div>
+              <div class="body-sm">Desk research, definición de HMW, mapa de stakeholders y protocolo de entrevistas</div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;">
+            <div style="width:80px;height:80px;border-radius:50%;background:var(--pink);display:flex;align-items:center;justify-content:center;font-size:32px;box-shadow:0 0 0 8px rgba(218,114,151,0.15);flex-shrink:0;">🗣</div>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--pink);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Semana 3–4</div>
+              <div style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:8px;">Field Research</div>
+              <div class="body-sm">8 entrevistas semiestructuradas + encuesta cuantitativa con 47 respuestas</div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;">
+            <div style="width:80px;height:80px;border-radius:50%;background:var(--amber);display:flex;align-items:center;justify-content:center;font-size:32px;box-shadow:0 0 0 8px rgba(245,158,11,0.15);flex-shrink:0;">🔍</div>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Semana 5–6</div>
+              <div style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:8px;">Análisis</div>
+              <div class="body-sm">Affinity mapping, benchmark de 4 competidores, síntesis de insights y personas</div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;">
+            <div style="width:80px;height:80px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;font-size:32px;box-shadow:0 0 0 8px rgba(139,92,246,0.15);flex-shrink:0;">✅</div>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Semana 7–8</div>
+              <div style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:8px;">Validación</div>
+              <div class="body-sm">Concept testing con prototipos, iteraciones y handoff al equipo de producto</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Methods tags -->
+      <div style="display:flex;gap:16px;flex-wrap:wrap;">
+        <div style="background:#fff;border-radius:999px;padding:12px 22px;font-size:16px;font-weight:600;color:var(--dark);box-shadow:0 2px 12px rgba(0,0,0,0.06);">📋 Entrevistas 1:1</div>
+        <div style="background:#fff;border-radius:999px;padding:12px 22px;font-size:16px;font-weight:600;color:var(--dark);box-shadow:0 2px 12px rgba(0,0,0,0.06);">📊 Encuesta cuantitativa</div>
+        <div style="background:#fff;border-radius:999px;padding:12px 22px;font-size:16px;font-weight:600;color:var(--dark);box-shadow:0 2px 12px rgba(0,0,0,0.06);">🔬 Benchmark análisis</div>
+        <div style="background:#fff;border-radius:999px;padding:12px 22px;font-size:16px;font-weight:600;color:var(--dark);box-shadow:0 2px 12px rgba(0,0,0,0.06);">🗺 Affinity mapping</div>
+        <div style="background:#fff;border-radius:999px;padding:12px 22px;font-size:16px;font-weight:600;color:var(--dark);box-shadow:0 2px 12px rgba(0,0,0,0.06);">👤 User personas</div>
+        <div style="background:#fff;border-radius:999px;padding:12px 22px;font-size:16px;font-weight:600;color:var(--dark);box-shadow:0 2px 12px rgba(0,0,0,0.06);">🧪 Concept testing</div>
+        <div style="background:#fff;border-radius:999px;padding:12px 22px;font-size:16px;font-weight:600;color:var(--dark);box-shadow:0 2px 12px rgba(0,0,0,0.06);">💬 Think-aloud protocol</div>
+      </div>
+
+    </div>
+    <div class="slide-num">04 / 09</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       05 · ENTREVISTAS A USUARIOS
+  ══════════════════════════════════════════ -->
+  <section data-screen-label="05 Entrevistas">
+    <div class="blob blob-pink" style="width:600px;height:600px;top:-200px;right:-100px;"></div>
+
+    <div style="position:absolute;top:48px;left:72px;right:72px;display:flex;align-items:center;justify-content:space-between;">
+      <div class="nutra-logo">
+        <div class="icon">🥗</div>
+        <div class="wordmark">NUTRA</div>
+      </div>
+      <div class="label">Entrevistas a Usuarios</div>
+    </div>
+
+    <div style="position:absolute;top:140px;left:72px;right:72px;bottom:80px;display:grid;grid-template-columns:2fr 3fr;gap:64px;align-items:start;">
+
+      <!-- left: methodology -->
+      <div style="display:flex;flex-direction:column;gap:28px;padding-top:8px;">
+        <div>
+          <div class="label" style="margin-bottom:12px;">Perfil de participantes</div>
+          <div class="h4" style="margin-bottom:16px;">8 entrevistas<br/>semiestructuradas</div>
+          <div class="body-sm">45–90 min por sesión · Remoto y presencial · Grabadas y transcritas</div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="background:#fff;border-radius:16px;padding:16px 20px;">
+            <div style="font-size:13px;font-weight:700;color:var(--mid);margin-bottom:4px;">GÉNERO</div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="height:8px;background:var(--green);border-radius:4px;width:75%;"></div>
+              <div style="font-size:14px;font-weight:700;color:var(--dark);">75% F</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
+              <div style="height:8px;background:var(--purple);border-radius:4px;width:25%;"></div>
+              <div style="font-size:14px;font-weight:700;color:var(--dark);">25% M</div>
+            </div>
+          </div>
+          <div style="background:#fff;border-radius:16px;padding:16px 20px;">
+            <div style="font-size:13px;font-weight:700;color:var(--mid);margin-bottom:4px;">EDAD</div>
+            <div style="font-size:15px;font-weight:600;color:var(--dark);">23–41 años · Prom: 29</div>
+          </div>
+          <div style="background:#fff;border-radius:16px;padding:16px 20px;">
+            <div style="font-size:13px;font-weight:700;color:var(--mid);margin-bottom:4px;">EXPERIENCIA PREVIA</div>
+            <div style="font-size:15px;font-weight:600;color:var(--dark);">6 de 8 habían usado otra app de nutrición</div>
+          </div>
+        </div>
+
+        <div style="background:var(--green);border-radius:16px;padding:20px;">
+          <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.7);margin-bottom:8px;">PREGUNTA GUÍA</div>
+          <div style="font-size:17px;font-weight:600;color:#fff;line-height:1.5;font-style:italic;">"¿Cómo es tu relación con el registro de lo que comés?"</div>
+        </div>
+      </div>
+
+      <!-- right: quotes -->
+      <div style="display:flex;flex-direction:column;gap:20px;padding-top:8px;">
+        <div class="label" style="margin-bottom:4px;">Fragmentos de entrevistas</div>
+
+        <div style="background:#fff;border-radius:20px;padding:28px;border-left:5px solid var(--pink);">
+          <div style="font-size:22px;font-weight:600;color:var(--dark);line-height:1.5;margin-bottom:16px;font-style:italic;">"Anotaba en un cuaderno lo que comía pero a la semana ya lo había abandonado. No tenía ni la estructura ni la motivación para seguir."</div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--pink);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;">S</div>
+            <div>
+              <div style="font-size:14px;font-weight:700;color:var(--dark);">Sofía, 27</div>
+              <div style="font-size:13px;color:var(--mid);">Paciente · 1 año con nutricionista</div>
+            </div>
+            <div class="pill pill-pink" style="margin-left:auto;">Herramienta</div>
+          </div>
+        </div>
+
+        <div style="background:#fff;border-radius:20px;padding:28px;border-left:5px solid var(--amber);">
+          <div style="font-size:22px;font-weight:600;color:var(--dark);line-height:1.5;margin-bottom:16px;font-style:italic;">"Probé MyFitnessPal pero el plan de mi nutricionista no encajaba para nada. Terminé dejándolo porque registraba cosas que no correspondían a mi plan."</div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--amber);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;">L</div>
+            <div>
+              <div style="font-size:14px;font-weight:700;color:var(--dark);">Lucas, 31</div>
+              <div style="font-size:13px;color:var(--mid);">Paciente · 6 meses con nutricionista</div>
+            </div>
+            <div class="pill pill-amber" style="margin-left:auto;">Fricción</div>
+          </div>
+        </div>
+
+        <div style="background:#fff;border-radius:20px;padding:28px;border-left:5px solid var(--green);">
+          <div style="font-size:22px;font-weight:600;color:var(--dark);line-height:1.5;margin-bottom:16px;font-style:italic;">"Mandaba fotitos a mi nutricionista por WhatsApp de lo que comía. Era lo más cercano a un registro que tenía, pero se perdía todo."</div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;">M</div>
+            <div>
+              <div style="font-size:14px;font-weight:700;color:var(--dark);">Martina, 24</div>
+              <div style="font-size:13px;color:var(--mid);">Paciente · 3 meses con nutricionista</div>
+            </div>
+            <div class="pill pill-green" style="margin-left:auto;">Workaround</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="slide-num">05 / 09</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       06 · BENCHMARK
+  ══════════════════════════════════════════ -->
+  <section data-screen-label="06 Benchmark">
+    <div class="blob blob-amber" style="width:500px;height:500px;bottom:-150px;right:-100px;"></div>
+
+    <div style="position:absolute;top:48px;left:72px;right:72px;display:flex;align-items:center;justify-content:space-between;">
+      <div class="nutra-logo">
+        <div class="icon">🥗</div>
+        <div class="wordmark">NUTRA</div>
+      </div>
+      <div class="label">Benchmark Competitivo</div>
+    </div>
+
+    <div style="position:absolute;top:140px;left:72px;right:72px;bottom:80px;display:flex;flex-direction:column;gap:28px;justify-content:center;">
+
+      <div style="display:flex;gap:16px;align-items:flex-end;">
+        <div class="h3">Análisis de 4 competidores</div>
+        <div class="body" style="padding-bottom:4px;">· Evaluados en 6 dimensiones clave</div>
+      </div>
+
+      <!-- Table -->
+      <div style="background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.07);">
+        <!-- header -->
+        <div style="display:grid;grid-template-columns:200px 1fr 1fr 1fr 1fr 1fr 1fr;background:var(--dark);padding:16px 20px;gap:4px;">
+          <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;">App</div>
+          <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;text-align:center;">Porciones<br/>equiv.</div>
+          <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;text-align:center;">Vinc.<br/>nutricion.</div>
+          <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;text-align:center;">Sin<br/>calorías</div>
+          <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;text-align:center;">Sistema<br/>racha</div>
+          <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;text-align:center;">Notif.<br/>intelig.</div>
+          <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;text-align:center;">UX<br/>simplif.</div>
+        </div>
+
+        <!-- rows -->
+        <div style="display:grid;grid-template-columns:200px 1fr 1fr 1fr 1fr 1fr 1fr;padding:14px 20px;gap:4px;border-bottom:1px solid var(--light);align-items:center;">
+          <div style="font-size:16px;font-weight:700;color:var(--dark);">MyFitnessPal</div>
+          <div style="text-align:center;font-size:20px;">❌</div>
+          <div style="text-align:center;font-size:20px;">❌</div>
+          <div style="text-align:center;font-size:20px;">❌</div>
+          <div style="text-align:center;font-size:20px;">✅</div>
+          <div style="text-align:center;font-size:20px;">⚠️</div>
+          <div style="text-align:center;font-size:20px;">❌</div>
+        </div>
+        <div style="display:grid;grid-template-columns:200px 1fr 1fr 1fr 1fr 1fr 1fr;padding:14px 20px;gap:4px;border-bottom:1px solid var(--light);align-items:center;background:#FAFAFA;">
+          <div style="font-size:16px;font-weight:700;color:var(--dark);">Cronometer</div>
+          <div style="text-align:center;font-size:20px;">❌</div>
+          <div style="text-align:center;font-size:20px;">❌</div>
+          <div style="text-align:center;font-size:20px;">❌</div>
+          <div style="text-align:center;font-size:20px;">❌</div>
+          <div style="text-align:center;font-size:20px;">❌</div>
+          <div style="text-align:center;font-size:20px;">❌</div>
+        </div>
+        <div style="display:grid;grid-template-columns:200px 1fr 1fr 1fr 1fr 1fr 1fr;padding:14px 20px;gap:4px;border-bottom:1px solid var(--light);align-items:center;">
+          <div style="font-size:16px;font-weight:700;color:var(--dark);">Lifesum</div>
+          <div style="text-align:center;font-size:20px;">⚠️</div>
+          <div style="text-align:center;font-size:20px;">❌</div>
+          <div style="text-align:center;font-size:20px;">❌</div>
+          <div style="text-align:center;font-size:20px;">✅</div>
+          <div style="text-align:center;font-size:20px;">✅</div>
+          <div style="text-align:center;font-size:20px;">⚠️</div>
+        </div>
+        <div style="display:grid;grid-template-columns:200px 1fr 1fr 1fr 1fr 1fr 1fr;padding:14px 20px;gap:4px;border-bottom:1px solid var(--light);align-items:center;background:#FAFAFA;">
+          <div style="font-size:16px;font-weight:700;color:var(--dark);">FatSecret</div>
+          <div style="text-align:center;font-size:20px;">❌</div>
+          <div style="text-align:center;font-size:20px;">❌</div>
+          <div style="text-align:center;font-size:20px;">❌</div>
+          <div style="text-align:center;font-size:20px;">❌</div>
+          <div style="text-align:center;font-size:20px;">⚠️</div>
+          <div style="text-align:center;font-size:20px;">⚠️</div>
+        </div>
+        <!-- Nutra row -->
+        <div style="display:grid;grid-template-columns:200px 1fr 1fr 1fr 1fr 1fr 1fr;padding:16px 20px;gap:4px;align-items:center;background:linear-gradient(90deg,#DCFCE7,#F0FFF7);">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="width:28px;height:28px;border-radius:8px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:14px;">🥗</div>
+            <div style="font-size:16px;font-weight:800;color:var(--green);">NUTRA</div>
+          </div>
+          <div style="text-align:center;font-size:20px;">✅</div>
+          <div style="text-align:center;font-size:20px;">✅</div>
+          <div style="text-align:center;font-size:20px;">✅</div>
+          <div style="text-align:center;font-size:20px;">✅</div>
+          <div style="text-align:center;font-size:20px;">✅</div>
+          <div style="text-align:center;font-size:20px;">✅</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:20px;">
+        <div style="display:flex;align-items:center;gap:8px;font-size:15px;color:var(--mid);">✅ <span>Implementado</span></div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:15px;color:var(--mid);">⚠️ <span>Parcial</span></div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:15px;color:var(--mid);">❌ <span>No disponible</span></div>
+        <div style="margin-left:auto;background:var(--green);color:#fff;border-radius:999px;padding:8px 20px;font-size:14px;font-weight:700;">Nutra es la única app que cubre los 6 criterios</div>
+      </div>
+
+    </div>
+    <div class="slide-num">06 / 09</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       07 · INSIGHTS CLAVE
+  ══════════════════════════════════════════ -->
+  <section data-screen-label="07 Insights" style="background:#1A2E1A;">
+    <div class="blob blob-green" style="width:700px;height:700px;top:-200px;right:-150px;opacity:0.2;"></div>
+    <div class="blob blob-pink" style="width:400px;height:400px;bottom:-100px;left:100px;opacity:0.15;"></div>
+
+    <div style="position:absolute;top:48px;left:72px;right:72px;display:flex;align-items:center;justify-content:space-between;">
+      <div class="nutra-logo">
+        <div class="icon">🥗</div>
+        <div class="wordmark" style="color:#fff;">NUTRA</div>
+      </div>
+      <div class="label label-light">Insights Clave</div>
+    </div>
+
+    <div style="position:absolute;top:140px;left:72px;right:72px;bottom:80px;display:flex;flex-direction:column;gap:32px;justify-content:center;">
+
+      <div class="h3" style="color:#fff;">4 insights que definieron el producto</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+
+        <div style="background:rgba(255,255,255,0.06);border-radius:24px;padding:32px;border:1px solid rgba(255,255,255,0.08);display:flex;flex-direction:column;gap:16px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:48px;height:48px;border-radius:14px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:22px;">🍽</div>
+            <div style="font-size:13px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:1.5px;">Insight 01</div>
+          </div>
+          <div style="font-size:26px;font-weight:800;color:#fff;line-height:1.2;">Hablar de calorías los alejaba de la comida</div>
+          <div style="font-size:16px;color:rgba(255,255,255,0.6);line-height:1.6;">El 87% de los entrevistados relacionaba "contar calorías" con dieta, restricción y culpa. Cuando el registro se plantea como porciones del propio plan, esa carga desaparece.</div>
+          <div style="background:var(--green);border-radius:12px;padding:12px 16px;margin-top:auto;">
+            <div style="font-size:14px;font-weight:700;color:#fff;">→ Nutra trabaja con porciones según el plan de cada paciente</div>
+          </div>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.06);border-radius:24px;padding:32px;border:1px solid rgba(255,255,255,0.08);display:flex;flex-direction:column;gap:16px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:48px;height:48px;border-radius:14px;background:var(--pink);display:flex;align-items:center;justify-content:center;font-size:22px;">🔗</div>
+            <div style="font-size:13px;font-weight:700;color:var(--pink);text-transform:uppercase;letter-spacing:1.5px;">Insight 02</div>
+          </div>
+          <div style="font-size:26px;font-weight:800;color:#fff;line-height:1.2;">El vínculo con la nutricionista es el mayor motivador externo</div>
+          <div style="font-size:16px;color:rgba(255,255,255,0.6);line-height:1.6;">Tener a la nutricionista del otro lado cambiaba todo. Los usuarios con un plan vinculado registraban 3× más que quienes usaban la app sola, sin ese vínculo.</div>
+          <div style="background:var(--pink);border-radius:12px;padding:12px 16px;margin-top:auto;">
+            <div style="font-size:14px;font-weight:700;color:#fff;">→ Sistema de código + plan personalizado</div>
+          </div>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.06);border-radius:24px;padding:32px;border:1px solid rgba(255,255,255,0.08);display:flex;flex-direction:column;gap:16px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:48px;height:48px;border-radius:14px;background:var(--amber);display:flex;align-items:center;justify-content:center;font-size:22px;">🔥</div>
+            <div style="font-size:13px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:1.5px;">Insight 03</div>
+          </div>
+          <div style="font-size:26px;font-weight:800;color:#fff;line-height:1.2;">"No quiero romper mi racha" apareció solo, sin que yo lo preguntara</div>
+          <div style="font-size:16px;color:rgba(255,255,255,0.6);line-height:1.6;">6 de 8 personas lo dijeron sin que yo preguntara. La racha funcionaba mejor que cualquier meta abstracta — era algo concreto y visible que no querían perder.</div>
+          <div style="background:var(--amber);border-radius:12px;padding:12px 16px;margin-top:auto;">
+            <div style="font-size:14px;font-weight:700;color:#fff;">→ Streak card + notificación de racha en riesgo</div>
+          </div>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.06);border-radius:24px;padding:32px;border:1px solid rgba(255,255,255,0.08);display:flex;flex-direction:column;gap:16px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:48px;height:48px;border-radius:14px;background:var(--purple);display:flex;align-items:center;justify-content:center;font-size:22px;">⏰</div>
+            <div style="font-size:13px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:1.5px;">Insight 04</div>
+          </div>
+          <div style="font-size:26px;font-weight:800;color:#fff;line-height:1.2;">Querían registrar, pero se olvidaban</div>
+          <div style="font-size:16px;color:rgba(255,255,255,0.6);line-height:1.6;">El 73% dijo que se olvidaba — no que no quisiera hacerlo. Llegaban a la noche y ya era tarde. Un recordatorio en el momento justo hacía toda la diferencia.</div>
+          <div style="background:var(--purple);border-radius:12px;padding:12px 16px;margin-top:auto;">
+            <div style="font-size:14px;font-weight:700;color:#fff;">→ Recordatorios configurables por el usuario</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="slide-num" style="color:rgba(255,255,255,0.2);">07 / 09</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       08 · SOLUCIONES DISEÑADAS
+  ══════════════════════════════════════════ -->
+  <section data-screen-label="08 Soluciones">
+    <div class="blob blob-green" style="width:600px;height:600px;top:-150px;left:-100px;"></div>
+
+    <div style="position:absolute;top:48px;left:72px;right:72px;display:flex;align-items:center;justify-content:space-between;">
+      <div class="nutra-logo">
+        <div class="icon">🥗</div>
+        <div class="wordmark">NUTRA</div>
+      </div>
+      <div class="label">De Insights a Soluciones</div>
+    </div>
+
+    <div style="position:absolute;top:140px;left:72px;right:72px;bottom:80px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;align-items:start;padding-top:8px;">
+
+      <div class="card" style="padding:32px;display:flex;flex-direction:column;gap:20px;">
+        <div style="width:56px;height:56px;border-radius:16px;background:#DCFCE7;display:flex;align-items:center;justify-content:center;font-size:26px;">✅</div>
+        <div>
+          <div class="label" style="margin-bottom:8px;">Registro sin fricción</div>
+          <div class="h4" style="margin-bottom:12px;">Checkboxes de porciones</div>
+          <div class="body-sm">El usuario toca un checkbox por cada porción de su plan. Nada de gramajes ni cálculos. En las pruebas, completar una comida llevaba menos de 30 segundos.</div>
+        </div>
+        <div style="background:var(--green-bg);border-radius:12px;padding:12px;">
+          <div style="font-size:13px;font-weight:700;color:var(--mid);margin-bottom:8px;">VALIDACIÓN</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="height:6px;background:var(--green);border-radius:3px;flex:1;"></div>
+            <div style="font-size:14px;font-weight:700;color:var(--green);">94% completitud</div>
+          </div>
+          <div style="font-size:13px;color:var(--mid);margin-top:4px;">vs 41% en apps de calorías</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;gap:6px;align-items:center;font-size:14px;color:var(--mid);">
+            <span style="color:var(--green);font-weight:700;">→</span> Indicador de progreso por comida
+          </div>
+          <div style="display:flex;gap:6px;align-items:center;font-size:14px;color:var(--mid);">
+            <span style="color:var(--green);font-weight:700;">→</span> Foto opcional de la comida
+          </div>
+          <div style="display:flex;gap:6px;align-items:center;font-size:14px;color:var(--mid);">
+            <span style="color:var(--green);font-weight:700;">→</span> Modo registro libre
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="padding:32px;display:flex;flex-direction:column;gap:20px;">
+        <div style="width:56px;height:56px;border-radius:16px;background:#FCE7EF;display:flex;align-items:center;justify-content:center;font-size:26px;">🔗</div>
+        <div>
+          <div class="label" style="margin-bottom:8px;color:var(--pink);">Accountability clínico</div>
+          <div class="h4" style="margin-bottom:12px;">Plan directo del nutricionista</div>
+          <div class="body-sm">El nutricionista crea el plan en su panel y lo vincula al paciente vía código. El paciente registra exactamente lo que su nutricionista definió, sin adaptaciones ni ambigüedades.</div>
+        </div>
+        <div style="background:var(--green-bg);border-radius:12px;padding:12px;">
+          <div style="font-size:13px;font-weight:700;color:var(--mid);margin-bottom:8px;">IMPACTO</div>
+          <div style="font-size:20px;font-weight:800;color:var(--pink);">3× más adherencia</div>
+          <div style="font-size:13px;color:var(--mid);margin-top:2px;">pacientes vinculados vs. plan propio</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;gap:6px;align-items:center;font-size:14px;color:var(--mid);">
+            <span style="color:var(--pink);font-weight:700;">→</span> Acceso vía código de 6 caracteres
+          </div>
+          <div style="display:flex;gap:6px;align-items:center;font-size:14px;color:var(--mid);">
+            <span style="color:var(--pink);font-weight:700;">→</span> Banner del nutricionista en app
+          </div>
+          <div style="display:flex;gap:6px;align-items:center;font-size:14px;color:var(--mid);">
+            <span style="color:var(--pink);font-weight:700;">→</span> Mensajes directos del nutricionista
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="padding:32px;display:flex;flex-direction:column;gap:20px;">
+        <div style="width:56px;height:56px;border-radius:16px;background:#FEF9C3;display:flex;align-items:center;justify-content:center;font-size:26px;">🔥</div>
+        <div>
+          <div class="label" style="margin-bottom:8px;color:var(--amber);">Gamificación contextual</div>
+          <div class="h4" style="margin-bottom:12px;">Sistema de rachas + notificaciones</div>
+          <div class="body-sm">El sistema de racha muestra los últimos 7 días y el récord personal. Combinado con notificaciones inteligentes (configurable por el usuario), el olvido deja de ser excusa.</div>
+        </div>
+        <div style="background:var(--green-bg);border-radius:12px;padding:12px;">
+          <div style="font-size:13px;font-weight:700;color:var(--mid);margin-bottom:8px;">RETENCIÓN</div>
+          <div style="font-size:20px;font-weight:800;color:var(--amber);">+82% a los 30 días</div>
+          <div style="font-size:13px;color:var(--mid);margin-top:2px;">usuarios en piloto de 30 días</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;gap:6px;align-items:center;font-size:14px;color:var(--mid);">
+            <span style="color:var(--amber);font-weight:700;">→</span> Racha diaria con historial 7 días
+          </div>
+          <div style="display:flex;gap:6px;align-items:center;font-size:14px;color:var(--mid);">
+            <span style="color:var(--amber);font-weight:700;">→</span> Notif. alerta racha a las 20:00
+          </div>
+          <div style="display:flex;gap:6px;align-items:center;font-size:14px;color:var(--mid);">
+            <span style="color:var(--amber);font-weight:700;">→</span> Recordatorio diario configurable
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="slide-num">08 / 09</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       09 · PRÓXIMOS PASOS
+  ══════════════════════════════════════════ -->
+  <section data-screen-label="09 Próximos Pasos">
+    <div class="blob blob-green" style="width:700px;height:700px;top:-200px;right:-200px;"></div>
+    <div class="blob blob-pink" style="width:400px;height:400px;bottom:-100px;left:200px;"></div>
+
+    <div style="position:absolute;top:48px;left:72px;right:72px;display:flex;align-items:center;justify-content:space-between;">
+      <div class="nutra-logo">
+        <div class="icon">🥗</div>
+        <div class="wordmark">NUTRA</div>
+      </div>
+      <div class="label">Próximos Pasos</div>
+    </div>
+
+    <div style="position:absolute;top:140px;left:72px;right:72px;bottom:80px;display:grid;grid-template-columns:5fr 4fr;gap:80px;align-items:center;">
+
+      <div style="display:flex;flex-direction:column;gap:40px;">
+        <div>
+          <div class="h3" style="margin-bottom:20px;">Iteraciones <span style="color:var(--green);">pendientes</span> y oportunidades futuras</div>
+          <div class="body">Basadas en el feedback del piloto y las entrevistas de cierre, identificamos las siguientes prioridades para la próxima fase.</div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:16px;">
+
+          <div style="background:#fff;border-radius:18px;padding:22px 24px;display:flex;gap:16px;align-items:flex-start;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+            <div style="width:36px;height:36px;border-radius:10px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">1</div>
+            <div>
+              <div style="font-size:18px;font-weight:700;color:var(--dark);margin-bottom:4px;">Dashboard para nutricionistas</div>
+              <div class="body-sm">Panel donde la nutricionista pueda ver el historial de adherencia de sus pacientes y recibir alertas de baja performance.</div>
+            </div>
+            <div class="pill pill-amber" style="flex-shrink:0;margin-left:auto;">Alta prioridad</div>
+          </div>
+
+          <div style="background:#fff;border-radius:18px;padding:22px 24px;display:flex;gap:16px;align-items:flex-start;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+            <div style="width:36px;height:36px;border-radius:10px;background:var(--pink);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;color:#fff;font-weight:700;">2</div>
+            <div>
+              <div style="font-size:18px;font-weight:700;color:var(--dark);margin-bottom:4px;">Reconocimiento de alimentos por foto</div>
+              <div class="body-sm">Integración con modelo de visión para identificar porciones desde una foto, eliminando la fricción del registro manual.</div>
+            </div>
+            <div class="pill pill-pink" style="flex-shrink:0;margin-left:auto;">Media prioridad</div>
+          </div>
+
+          <div style="background:#fff;border-radius:18px;padding:22px 24px;display:flex;gap:16px;align-items:flex-start;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+            <div style="width:36px;height:36px;border-radius:10px;background:var(--purple);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;color:#fff;font-weight:700;">3</div>
+            <div>
+              <div style="font-size:18px;font-weight:700;color:var(--dark);margin-bottom:4px;">Reportes de progreso semanales</div>
+              <div class="body-sm">Resumen automatizado enviado a la nutricionista antes de cada consulta, con el historial de adherencia del paciente.</div>
+            </div>
+            <div class="pill pill-purple" style="flex-shrink:0;margin-left:auto;">Backlog</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- right: thank you + contact -->
+      <div style="display:flex;flex-direction:column;gap:28px;">
+        <div style="background:var(--dark);border-radius:28px;padding:40px;display:flex;flex-direction:column;gap:20px;">
+          <div style="font-size:48px;line-height:1;">👋</div>
+          <div style="font-size:32px;font-weight:800;color:#fff;line-height:1.2;">Gracias por llegar hasta acá</div>
+          <div style="font-size:17px;color:rgba(255,255,255,0.65);line-height:1.6;">Gracias por tomarte el tiempo de leer este proceso.</div>
+          <div style="border-top:1px solid rgba(255,255,255,0.1);padding-top:20px;display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;">CG</div>
+              <div>
+                <div style="font-size:17px;font-weight:700;color:#fff;">Camila González</div>
+                <div style="font-size:14px;color:rgba(255,255,255,0.55);">UX Researcher</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--green);border-radius:20px;padding:28px;">
+          <div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.7);margin-bottom:12px;text-transform:uppercase;letter-spacing:1.5px;">Resultado final</div>
+          <div style="display:flex;gap:24px;">
+            <div style="text-align:center;">
+              <div style="font-size:44px;font-weight:900;color:#fff;line-height:1;">82%</div>
+              <div style="font-size:13px;color:rgba(255,255,255,0.75);margin-top:4px;">adherencia<br/>a los 30 días</div>
+            </div>
+            <div style="width:1px;background:rgba(255,255,255,0.2);"></div>
+            <div style="text-align:center;">
+              <div style="font-size:44px;font-weight:900;color:#fff;line-height:1;">4.8★</div>
+              <div style="font-size:13px;color:rgba(255,255,255,0.75);margin-top:4px;">satisfacción<br/>en piloto</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <div class="slide-num">09 / 09</div>
+  </section>
+
+</deck-stage>
+</body>
+</html>
